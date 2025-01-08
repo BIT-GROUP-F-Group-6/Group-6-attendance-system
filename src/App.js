@@ -18,10 +18,8 @@ import { getCourses, addCourse as addCourseToDB } from './firebaseService';
 function AppContent() {
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [courses, setCourses] = useState([]);
-
   const navigate = useNavigate();
 
-  // Fetch courses from Firestore
   useEffect(() => {
     const fetchCourses = async () => {
       try {
@@ -31,10 +29,10 @@ function AppContent() {
         console.error('Failed to fetch courses:', error);
       }
     };
+
     fetchCourses();
   }, []);
 
-  // Handle user login
   const handleLogin = (userType, id = null) => {
     setLoggedInUser(userType);
     if (userType === 'student') {
@@ -46,7 +44,6 @@ function AppContent() {
     }
   };
 
-  // Add a new course to Firestore
   const addCourse = async (newCourse) => {
     await addCourseToDB(newCourse);
     setCourses([...courses, newCourse]);
@@ -67,8 +64,6 @@ function AppContent() {
           <Route path="/dashboard" element={loggedInUser === 'admin' ? <Dashboard courses={courses} addCourse={addCourse} /> : <Homepage />} />
           <Route path="/studentDashboard" element={loggedInUser === 'student' ? <StudentDashboard courses={courses} /> : <Homepage />} />
           <Route path="/passwordReset" element={<PasswordReset />} />
-
-          {/* 404 Not Found Route */}
           <Route path="*" element={<h1>Page Not Found</h1>} />
         </Routes>
       </CSSTransition>
@@ -77,8 +72,11 @@ function AppContent() {
 }
 
 function App() {
+  const isProduction = process.env.NODE_ENV === 'production';
+  const basename = isProduction ? '/SOFTWARE-ENGINEERING-GROUP-PROJECT' : ''; // Use empty string for local development
+
   return (
-    <Router basename="/SOFTWARE-ENGINEERING-GROUP-PROJECT">
+    <Router basename={basename}>
       <AppContent />
     </Router>
   );
