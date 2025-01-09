@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles.css';
 
-function Login() {
+function SignIn() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = (e) => {
+  const handlesignIn (e) => {
     e.preventDefault();
     navigate('/dashboard');
   };
