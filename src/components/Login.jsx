@@ -13,10 +13,10 @@ function SignIn() {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-form">
+    <div className="signIn-container">
+      <div className="signIn-form">
         <h2>Log In</h2>
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handlesignIn}>
           <input
             type="text"
             placeholder="User name / Email"
